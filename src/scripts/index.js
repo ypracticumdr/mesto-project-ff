@@ -1,10 +1,10 @@
 import "../pages/index.css";
+import { initialCards } from "../components/cards.js";
 import {
-  initialCards,
-  renderElement,
+  generateCardElement,
   deleteElement,
   likeCallback,
-} from "../components/cards.js";
+} from "../components/card.js";
 import { openModalWindow, closeModalWindow } from "../components/modal.js";
 
 // @todo: DOM узлы
@@ -84,6 +84,23 @@ function imageClickCalback(placeTemplate) {
 }
 
 // @todo: Вывести карточки на страницу
+function renderElement({
+  container,
+  data,
+  onClickCallback,
+  fromBegining,
+  likeCallback,
+  imageClickCalback,
+}) {
+  const card = generateCardElement({
+    data: data,
+    onClickCallback: onClickCallback,
+    likeCallback: likeCallback,
+    imageClickCalback: imageClickCalback,
+  });
+  fromBegining ? container.prepend(card) : container.append(card);
+}
+
 initialCards.forEach((item) => {
   renderElement({
     container: placesListElement,

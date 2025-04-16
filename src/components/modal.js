@@ -1,7 +1,8 @@
 export function openModalWindow(window) {
+  document.addEventListener("keydown", closeWindowByEscp);
   window.classList.add("popup_is-animated");
   window.addEventListener("click", closeWindowByClick);
-  window.addEventListener("keydown", closeWindowByEscp);
+
   window.querySelector(".popup__close").addEventListener("click", () => {
     closeModalWindow(window);
   });
@@ -10,9 +11,9 @@ export function openModalWindow(window) {
 }
 
 export function closeModalWindow(window) {
+  document.removeEventListener("keydown", closeWindowByEscp);
   window.classList.remove("popup_is-opened");
   window.removeEventListener("click", closeWindowByClick);
-  window.removeEventListener("keydown", closeWindowByEscp);
 }
 
 function closeWindowByClick(evnt) {
@@ -23,6 +24,6 @@ function closeWindowByClick(evnt) {
 
 function closeWindowByEscp(evnt) {
   if (evnt.key === "Escape") {
-    closeModalWindow(evnt.currentTarget);
+    closeModalWindow(evnt.currentTarget.querySelector('.popup_is-opened'));
   }
 }
