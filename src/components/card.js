@@ -10,9 +10,9 @@ function getPlaceTemplate() {
 // @todo: Функция создания карточки
 export function generateCardElement({
   data,
-  onClickCallback,
-  likeCallback,
-  imageClickCalback,
+  onDeleteCallback,
+  onLikeClickCallback,
+  onImageClickCalback,
 }) {
   const placeTemplate = getPlaceTemplate();
   const deleteButton = placeTemplate.querySelector(".card__delete-button");
@@ -24,15 +24,15 @@ export function generateCardElement({
   placeTemplate.querySelector(".card__title").textContent = data.name;
 
   deleteButton.addEventListener("click", () => {
-    onClickCallback(placeTemplate);
+    onDeleteCallback(placeTemplate);
   });
 
   cardLikeButton.addEventListener("click", () => {
-    likeCallback(cardLikeButton);
+    onLikeClickCallback(cardLikeButton);
   });
 
   cardImage.addEventListener("click", () => {
-    imageClickCalback(placeTemplate);
+    onImageClickCalback(placeTemplate);
   });
 
   return placeTemplate;
@@ -43,6 +43,6 @@ export function deleteElement(element) {
   element.remove();
 }
 
-export function likeCallback(likeButton) {
+export function onLikeClickCallback(likeButton) {
   likeButton.classList.toggle("card__like-button_is-active");
 }

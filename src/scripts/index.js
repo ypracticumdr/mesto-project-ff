@@ -3,7 +3,7 @@ import { initialCards } from "../components/cards.js";
 import {
   generateCardElement,
   deleteElement,
-  likeCallback,
+  onLikeClickCallback,
 } from "../components/card.js";
 import { openModalWindow, closeModalWindow } from "../components/modal.js";
 
@@ -19,6 +19,15 @@ const profileEditButton = document.querySelector(".profile__edit-button");
 const profileAddButton = document.querySelector(".profile__add-button");
 const editCardWindow = document.querySelector(".popup_type_new-card");
 const imageWindow = document.querySelector(".popup_type_image");
+
+const popups = document.querySelectorAll('.popup');
+
+popups.forEach((popup) => {
+  const closeXButton = popup.querySelector('.popup__close');
+  closeXButton.addEventListener("click", () => {
+    closeModalWindow(popup);
+  });
+});
 
 profileEditButton.addEventListener("click", function (evt) {
   editProfileWindow.querySelector(".popup__input_type_name").value =
@@ -58,10 +67,10 @@ function handleCardFormSubmit(evnt) {
   renderElement({
     container: placesListElement,
     data: cardData,
-    onClickCallback: deleteElement,
+    onDeleteCallback: deleteElement,
     fromBegining: true,
-    likeCallback: likeCallback,
-    imageClickCalback: imageClickCalback,
+    onLikeClickCallback: onLikeClickCallback,
+    onImageClickCalback: onImageClickCalback,
   });
 
   closeModalWindow(evnt.currentTarget);
@@ -72,7 +81,7 @@ profileAddButton.addEventListener("click", () => {
   openModalWindow(editCardWindow);
 });
 
-function imageClickCalback(placeTemplate) {
+function onImageClickCalback(placeTemplate) {
   const cardImage = placeTemplate.querySelector(".card__image");
   const caption = placeTemplate.querySelector(".card__title").textContent;
 
@@ -87,16 +96,16 @@ function imageClickCalback(placeTemplate) {
 function renderElement({
   container,
   data,
-  onClickCallback,
+  onDeleteCallback,
   fromBegining,
-  likeCallback,
-  imageClickCalback,
+  onLikeClickCallback,
+  onImageClickCalback,
 }) {
   const card = generateCardElement({
     data: data,
-    onClickCallback: onClickCallback,
-    likeCallback: likeCallback,
-    imageClickCalback: imageClickCalback,
+    onDeleteCallback: onDeleteCallback,
+    onLikeClickCallback: onLikeClickCallback,
+    onImageClickCalback: onImageClickCalback,
   });
   fromBegining ? container.prepend(card) : container.append(card);
 }
@@ -105,8 +114,8 @@ initialCards.forEach((item) => {
   renderElement({
     container: placesListElement,
     data: item,
-    onClickCallback: deleteElement,
-    likeCallback: likeCallback,
-    imageClickCalback: imageClickCalback,
+    onDeleteCallback: deleteElement,
+    onLikeClickCallback: onLikeClickCallback,
+    onImageClickCalback: onImageClickCalback,
   });
 });

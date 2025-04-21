@@ -3,10 +3,6 @@ export function openModalWindow(window) {
   window.classList.add("popup_is-animated");
   window.addEventListener("click", closeWindowByClick);
 
-  window.querySelector(".popup__close").addEventListener("click", () => {
-    closeModalWindow(window);
-  });
-
   window.classList.add("popup_is-opened");
 }
 
