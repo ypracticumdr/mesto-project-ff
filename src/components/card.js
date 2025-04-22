@@ -32,7 +32,7 @@ export function generateCardElement({
   });
 
   cardImage.addEventListener("click", () => {
-    onImageClickCalback(placeTemplate);
+    onImageClickCalback(data.link, data.name);
   });
 
   return placeTemplate;

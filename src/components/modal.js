@@ -1,8 +1,7 @@
 export function openModalWindow(window) {
   document.addEventListener("keydown", closeWindowByEscp);
-  window.classList.add("popup_is-animated");
   window.addEventListener("click", closeWindowByClick);
-
+  
   window.classList.add("popup_is-opened");
 }
 

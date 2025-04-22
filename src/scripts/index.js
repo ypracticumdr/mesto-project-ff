@@ -15,6 +15,8 @@ const profileDescription = document.querySelector(".profile__description");
 
 const editProfileWindow = document.querySelector(".popup_type_edit");
 const profileEditButton = document.querySelector(".profile__edit-button");
+const popupInputTypeDescription = editProfileWindow.querySelector(".popup__input_type_description");
+const popupInputTypeName = editProfileWindow.querySelector(".popup__input_type_name");
 
 const profileAddButton = document.querySelector(".profile__add-button");
 const editCardWindow = document.querySelector(".popup_type_new-card");
@@ -23,6 +25,7 @@ const imageWindow = document.querySelector(".popup_type_image");
 const popups = document.querySelectorAll('.popup');
 
 popups.forEach((popup) => {
+  popup.classList.add("popup_is-animated");
   const closeXButton = popup.querySelector('.popup__close');
   closeXButton.addEventListener("click", () => {
     closeModalWindow(popup);
@@ -30,25 +33,20 @@ popups.forEach((popup) => {
 });
 
 profileEditButton.addEventListener("click", function (evt) {
-  editProfileWindow.querySelector(".popup__input_type_name").value =
+  popupInputTypeName.value =
     profileTitle.textContent;
-  editProfileWindow.querySelector(".popup__input_type_description").value =
-    profileDescription.textContent;
+  popupInputTypeDescription.value = profileDescription.textContent;
   openModalWindow(editProfileWindow);
 });
 
-editProfileWindow.addEventListener("submit", handleFormSubmit);
+editProfileWindow.addEventListener("submit", handleProfileFormSubmit);
 
 editCardWindow.addEventListener("submit", handleCardFormSubmit);
 
-function handleFormSubmit(evnt) {
+function handleProfileFormSubmit(evnt) {
   evnt.preventDefault();
-  profileTitle.textContent = evnt.target.querySelector(
-    ".popup__input_type_name"
-  ).value;
-  profileDescription.textContent = evnt.target.querySelector(
-    ".popup__input_type_description"
-  ).value;
+  profileTitle.textContent = popupInputTypeName.value;
+  profileDescription.textContent = popupInputTypeDescription.value;
   closeModalWindow(evnt.currentTarget);
 }
 
@@ -81,13 +79,12 @@ profileAddButton.addEventListener("click", () => {
   openModalWindow(editCardWindow);
 });
 
-function onImageClickCalback(placeTemplate) {
-  const cardImage = placeTemplate.querySelector(".card__image");
-  const caption = placeTemplate.querySelector(".card__title").textContent;
+function onImageClickCalback(imageLink, imageName) {
+  const popupImage = imageWindow.querySelector(".popup__image");
 
-  imageWindow.querySelector(".popup__image").src = cardImage.src;
-  imageWindow.querySelector(".popup__image").alt = cardImage.alt;
-  imageWindow.querySelector(".popup__caption").textContent = caption;
+  popupImage.src = imageLink;
+  popupImage.alt = imageName;
+  imageWindow.querySelector(".popup__caption").textContent = imageName;
 
   openModalWindow(imageWindow);
 }
