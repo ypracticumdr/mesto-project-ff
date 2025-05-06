@@ -6,6 +6,7 @@ import {
   onLikeClickCallback,
 } from "../components/card.js";
 import { openModalWindow, closeModalWindow } from "../components/modal.js";
+import { enableValidation, clearValidation } from "../components/validation.js";
 
 // @todo: DOM узлы
 const placesListElement = document.querySelector(".places__list");
@@ -24,6 +25,9 @@ const imageWindow = document.querySelector(".popup_type_image");
 
 const popups = document.querySelectorAll('.popup');
 
+const editProfileForm = document.querySelector('.popup__form[name="edit-profile"]');
+const addCardForm = document.querySelector('.popup__form[name="new-place"]');
+
 popups.forEach((popup) => {
   popup.classList.add("popup_is-animated");
   const closeXButton = popup.querySelector('.popup__close');
@@ -36,6 +40,7 @@ profileEditButton.addEventListener("click", function (evt) {
   popupInputTypeName.value =
     profileTitle.textContent;
   popupInputTypeDescription.value = profileDescription.textContent;
+  clearValidation(editProfileForm, validationConfiguration);
   openModalWindow(editProfileWindow);
 });
 
@@ -76,6 +81,8 @@ function handleCardFormSubmit(evnt) {
 }
 
 profileAddButton.addEventListener("click", () => {
+  addCardForm.reset();
+  clearValidation(addCardForm, validationConfiguration);
   openModalWindow(editCardWindow);
 });
 
@@ -116,3 +123,15 @@ initialCards.forEach((item) => {
     onImageClickCalback: onImageClickCalback,
   });
 });
+
+
+const validationConfiguration = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+enableValidation(validationConfiguration);
