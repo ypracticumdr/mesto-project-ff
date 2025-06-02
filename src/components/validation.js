@@ -11,7 +11,6 @@ const showInputError = (
 };
 
 const hideInputError = (formElement, element) => {
-  debugger;
   element.classList.remove("popup__input_type_error");
   const formError = formElement.querySelector(`.${element.id}-error`);
   formError.classList.remove("popup__error_visible");
