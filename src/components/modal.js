@@ -1,14 +1,14 @@
-export function openModalWindow(window) {
+export function openModalWindow(modalWindow) {
   document.addEventListener("keydown", closeWindowByEscp);
-  window.addEventListener("click", closeWindowByClick);
+  modalWindow.addEventListener("click", closeWindowByClick);
   
-  window.classList.add("popup_is-opened");
+  modalWindow.classList.add("popup_is-opened");
 }
 
-export function closeModalWindow(window) {
+export function closeModalWindow(modalWindow) {
   document.removeEventListener("keydown", closeWindowByEscp);
-  window.classList.remove("popup_is-opened");
-  window.removeEventListener("click", closeWindowByClick);
+  modalWindow.classList.remove("popup_is-opened");
+  modalWindow.removeEventListener("click", closeWindowByClick);
 }
 
 function closeWindowByClick(evnt) {

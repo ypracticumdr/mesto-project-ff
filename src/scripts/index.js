@@ -36,6 +36,10 @@ const popupInputTypeURl = popupAvatarEdit.querySelector(
 const profileAddButton = document.querySelector(".profile__add-button");
 const editCardWindow = document.querySelector(".popup_type_new-card");
 const imageWindow = document.querySelector(".popup_type_image");
+const captionPopup = imageWindow.querySelector(".popup__caption");
+
+const editCardName = editCardWindow.querySelector(".popup__input_type_card-name");
+const editCardUrl = editCardWindow.querySelector(".popup__input_type_url");
 
 const popups = document.querySelectorAll(".popup");
 
@@ -69,7 +73,7 @@ profileEditButton.addEventListener("click", function (evt) {
   openModalWindow(editProfileWindow);
 });
 
-popupAvatarEdit.addEventListener("submit", handelAvatarForSubmit);
+avatarEditForm.addEventListener("submit", handelAvatarForSubmit);
 
 editProfileWindow.addEventListener("submit", handleProfileFormSubmit);
 
@@ -84,12 +88,12 @@ function handelAvatarForSubmit(evnt) {
     .updateAvatar(avatarUrl)
     .then((profileData) => {
       profileImage.style.backgroundImage = `url(${profileData.avatar})`;
+      closeModalWindow(popupAvatarEdit);
     })
     .catch((error) => console.log(error))
     .finally(() => {
       submitButton.textContent = saveButtonText;
     });
-  closeModalWindow(evnt.currentTarget);
 }
 
 function handleProfileFormSubmit(evnt) {
@@ -104,13 +108,12 @@ function handleProfileFormSubmit(evnt) {
     .editProfile(profileData)
     .then((userInfo) => {
       renderUserInfo(userInfo);
+      closeModalWindow(editProfileWindow);
     })
     .catch((error) => console.log(error))
     .finally(() => {
       submitButton.textContent = saveButtonText;
     });
-
-  closeModalWindow(evnt.currentTarget);
 }
 
 function handleCardFormSubmit(evnt) {
@@ -118,8 +121,8 @@ function handleCardFormSubmit(evnt) {
   const submitButton = evnt.target.querySelector(".popup__button");
   submitButton.textContent = savingButtonText;
   const cardData = {
-    name: editCardWindow.querySelector(".popup__input_type_card-name").value,
-    link: editCardWindow.querySelector(".popup__input_type_url").value,
+    name: editCardName.value,
+    link: editCardUrl.value,
   };
   api
     .addCard(cardData)
@@ -132,14 +135,13 @@ function handleCardFormSubmit(evnt) {
         onLikeClickCallback: onLikeClickCallback,
         onImageClickCalback: onImageClickCalback,
       });
+      closeModalWindow(editCardWindow);
     })
     .catch((error) => console.log(error))
     .finally(() => {
       submitButton.textContent = saveButtonText;
     });
-
-  closeModalWindow(evnt.currentTarget);
-  document.querySelector('.popup__form[name="new-place"]').reset();
+  addCardForm.reset();
 }
 
 profileAddButton.addEventListener("click", () => {
@@ -153,7 +155,7 @@ function onImageClickCalback(imageLink, imageName) {
 
   popupImage.src = imageLink;
   popupImage.alt = imageName;
-  imageWindow.querySelector(".popup__caption").textContent = imageName;
+  captionPopup.textContent = imageName;
 
   openModalWindow(imageWindow);
 }

@@ -21,22 +21,12 @@ const getRequest = (uri) => {
     method: "GET",
     headers: config.headers,
   })
-    .then(handleResponse)
-    .catch((error) => Promise.reject(error));
+    .then(handleResponse);
 };
 
 export const getUserInfo = async () =>  {
-  const urlUserInfo = config.baseUrl + "/users/me";
-  try {
-    const res = await fetch(urlUserInfo, {
-      method: "GET",
-      headers: config.headers,
-    });
-    const data = await handleResponse(res);
-    return data;
-  } catch (error) {
-    console.log(`Ошибка запроса: ${error.message}`);
-  }
+  const urlUserInfo = "/users/me";
+  return getRequest(urlUserInfo);
 }
 
 export const getInitialCards = () => {

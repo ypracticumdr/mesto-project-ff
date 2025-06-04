@@ -25,14 +25,14 @@ export function generateCardElement({
   const isMyCard = data.owner._id === myId;
   const likeCounterValue = data.likes.length;
   const isLikedByMe = data.likes.find(
-    (element) => element._id === "26514d762638bd157111d663"
+    (element) => element._id === myId
   );
 
-  if (!isMyCard) deleteButton.style.display = "none";
+  if (!isMyCard) deleteButton.remove();
   if (isLikedByMe) cardLikeButton.classList.add("card__like-button_is-active");
 
-  placeTemplate.querySelector(".card__image").src = data.link;
-  placeTemplate.querySelector(".card__image").alt = data.name;
+  cardImage.src = data.link;
+  cardImage.alt = data.name;
   placeTemplate.querySelector(".card__title").textContent = data.name;
   likeCounter.textContent = likeCounterValue;
 

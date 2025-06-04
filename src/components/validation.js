@@ -10,10 +10,10 @@ const showInputError = (
   formError.textContent = errorMessage;
 };
 
-const hideInputError = (formElement, element) => {
-  element.classList.remove("popup__input_type_error");
+const hideInputError = (formElement, element, validationConfiguration) => {
+  element.classList.remove(validationConfiguration.inputErrorClass);
   const formError = formElement.querySelector(`.${element.id}-error`);
-  formError.classList.remove("popup__error_visible");
+  formError.classList.remove(validationConfiguration.errorClass);
   formError.textContent = "";
 };
 
@@ -28,7 +28,7 @@ const checkFormValidity = (
     iputElement.setCustomValidity("");
   }
   if (iputElement.validity.valid) {
-    hideInputError(formElement, iputElement);
+    hideInputError(formElement, iputElement, validationConfiguration);
   } else {
     showInputError(
       formElement,
@@ -73,7 +73,7 @@ const setInputEventListener = (formElement, validationConfiguration) => {
 };
 
 export const enableValidation = (validationConfiguration) => {
-  const popupForms = document.querySelectorAll(".popup__form");
+  const popupForms = document.querySelectorAll(validationConfiguration.formSelector);
   popupForms.forEach((popupForm) => {
     setInputEventListener(popupForm, validationConfiguration);
   });
@@ -89,6 +89,6 @@ export const clearValidation = (formElement, validationConfiguration) => {
   const inputList = Array.from(inputElements);
   toggleSubmitButton(inputList, submitButton, validationConfiguration);
   inputElements.forEach((inputSelector) => {
-    hideInputError(formElement, inputSelector);
+    hideInputError(formElement, inputSelector, validationConfiguration);
   });
 };
